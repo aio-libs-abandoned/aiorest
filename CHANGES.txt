@@ -1,6 +1,11 @@
 CHANGES
 -------
 
+0.2.5 (2014-10-30)
+^^^^^^^^^^^^^^^^^^
+
+* Fix response.write_eof() to follow aiohttp changes
+
 0.2.4 (2014-09-12)
 ^^^^^^^^^^^^^^^^^^
 

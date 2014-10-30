@@ -1,4 +1,5 @@
 import aiohttp
+import asyncio
 import json
 
 
@@ -28,6 +29,7 @@ class RESTError(aiohttp.HttpException):
             self.body = json.dumps(body).encode('utf-8')
         self.headers = headers
 
+    @asyncio.coroutine
     def write_response(self, response):
         if self.body is not None:
             response.add_headers(
@@ -45,7 +47,7 @@ class RESTError(aiohttp.HttpException):
 
         if self.body is not None:
             response.write(self.body)
-        response.write_eof()
+        yield from response.write_eof()
 
 
 class HttpCorsOptions(RESTError):
