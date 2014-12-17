@@ -161,12 +161,11 @@ class RESTServer:
             raise errors.RESTError(400, exc.reason)
         except errors.JsonLoadError as exc:
             raise errors.RESTError(400, exc.args[0])
-        except aiohttp.HttpException as exc:
+        except aiohttp.HttpProcessingError as exc:
             raise
         except Exception as exc:
             # add log about error
-            raise aiohttp.HttpErrorException(500,
-                                             "Internal Server Error") from exc
+            raise errors.RESTError(500, "Internal Server Error") from exc
         else:
             return json.dumps(ret)
 

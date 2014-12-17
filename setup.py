@@ -3,7 +3,7 @@ import re
 import sys
 from setuptools import setup, find_packages
 
-install_requires = ['aiohttp>=0.9.3']
+install_requires = ['aiohttp>=0.12']
 
 PY_VER = sys.version_info
 

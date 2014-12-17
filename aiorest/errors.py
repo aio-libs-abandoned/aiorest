@@ -11,15 +11,14 @@ class JsonDecodeError(UnicodeDecodeError):
     pass
 
 
-class RESTError(aiohttp.HttpException):
+class RESTError(aiohttp.HttpProcessingError):
     """REST server error.
 
-    Adds json_body to base aiohttp.HttpException.
+    Adds json_body to base aiohttp.HttpProcessingError
     """
 
     def __init__(self, code, message='', json_body={}, headers=None):
-        self.code = code
-        self.message = message
+        super().__init__(code=code, message=message, headers=headers)
         if json_body is None:
             self.body = None
         else:
@@ -27,7 +26,6 @@ class RESTError(aiohttp.HttpException):
                     'error_reason': message,
                     'error_code': code}
             self.body = json.dumps(body).encode('utf-8')
-        self.headers = headers
 
     @asyncio.coroutine
     def write_response(self, response):

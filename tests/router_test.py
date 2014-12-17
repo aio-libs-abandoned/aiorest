@@ -53,7 +53,7 @@ class RouterTests(unittest.TestCase):
 
         @asyncio.coroutine
         def go():
-            with self.assertRaises(aiohttp.HttpException) as ctx:
+            with self.assertRaises(aiohttp.HttpProcessingError) as ctx:
                 request = Request('host', aiohttp.RawRequestMessage(
                     'POST', '/not/found', '1.1', {}, True, None),
                     None, loop=self.loop)
@@ -70,7 +70,7 @@ class RouterTests(unittest.TestCase):
 
         @asyncio.coroutine
         def go():
-            with self.assertRaises(aiohttp.HttpException) as ctx:
+            with self.assertRaises(aiohttp.HttpProcessingError) as ctx:
                 request = Request('host', aiohttp.RawRequestMessage(
                     'DELETE', '/post/123', '1.1', {}, True, None),
                     None, loop=self.loop)
@@ -114,7 +114,7 @@ class RouterTests(unittest.TestCase):
             'GET', '/post/123', '1.1', {}, True, None),
             None, loop=self.loop)
 
-        with self.assertRaises(aiohttp.HttpException) as ctx:
+        with self.assertRaises(aiohttp.HttpProcessingError) as ctx:
             self.loop.run_until_complete(self.server.dispatch(request))
         self.assertEqual(404, ctx.exception.code)
 
@@ -127,7 +127,7 @@ class RouterTests(unittest.TestCase):
             'GET', '/po/123', '1.1', {}, True, None),
             None, loop=self.loop)
 
-        with self.assertRaises(aiohttp.HttpException) as ctx:
+        with self.assertRaises(aiohttp.HttpProcessingError) as ctx:
             self.loop.run_until_complete(self.server.dispatch(request))
         self.assertEqual(404, ctx.exception.code)
 
@@ -142,7 +142,7 @@ class RouterTests(unittest.TestCase):
 
         @asyncio.coroutine
         def go():
-            with self.assertRaises(aiohttp.HttpException) as ctx:
+            with self.assertRaises(aiohttp.HttpProcessingError) as ctx:
                 yield from self.server.dispatch(request)
             self.assertEqual(500, ctx.exception.code)
 
@@ -150,8 +150,8 @@ class RouterTests(unittest.TestCase):
 
     def test_dispatch_http_exception_from_handler(self):
         def f(request):
-            raise aiohttp.HttpErrorException(
-                401,
+            raise aiohttp.HttpProcessingError(
+                code=401,
                 headers=(('WWW-Authenticate', 'Basic'),))
         self.server.add_url('get', '/post/{id}', f)
 
@@ -161,7 +161,7 @@ class RouterTests(unittest.TestCase):
 
         @asyncio.coroutine
         def go():
-            with self.assertRaises(aiohttp.HttpException) as ctx:
+            with self.assertRaises(aiohttp.HttpProcessingError) as ctx:
                 yield from self.server.dispatch(request)
             self.assertEqual(401, ctx.exception.code)
             self.assertEqual((('WWW-Authenticate', 'Basic'),),

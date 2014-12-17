@@ -134,8 +134,8 @@ class CookieSessionTests(unittest.TestCase):
 
             @asyncio.coroutine
             def queries():
-                connector = aiohttp.SocketConnector(share_cookies=True,
-                                                    loop=self.loop)
+                connector = aiohttp.TCPConnector(share_cookies=True,
+                                                 loop=self.loop)
                 # initiate session; set start value to 2
                 resp = yield from aiohttp.request('GET', url + "/2",
                                                   connector=connector,
