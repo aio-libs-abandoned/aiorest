@@ -98,6 +98,8 @@ class RESTRequestHandler(aiohttp.server.ServerHttpProtocol):
                      exc=None, headers=None):
         now = time.time()
         if isinstance(exc, errors.RESTError):
+            if status == 500:
+                self.log_exception("Error handling request")
             resp_impl = aiohttp.Response(self.writer, status, close=True)
             resp_impl.add_header('Host', self.hostname)
             yield from exc.write_response(resp_impl)
