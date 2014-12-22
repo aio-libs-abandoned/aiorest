@@ -6,7 +6,7 @@ CHANGES
 
 * Fixed exceptions logging for unhandled errors
 
-0.3.1 (2014-12-22)
+0.3.0 (2014-12-17)
 ^^^^^^^^^^^^^^^^^^
 
 * Made aiorest compatible to aiohttp v0.12

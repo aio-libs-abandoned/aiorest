@@ -10,7 +10,9 @@ JSON REST framework based on aiohttp (an asyncio (PEP 3156) http server).
 Example usage
 -------------
 
-Simple REST server can be run like this::
+Simple REST server can be run like this:
+
+.. code:: python
 
    import asyncio
    import aiohttp
