@@ -1,6 +1,13 @@
 CHANGES
 -------
 
+0.4.0 (2015-01-18)
+^^^^^^^^^^^^^^^^^^
+
+* The aiorest library development has stopped, use aiohttp.web instead.
+
+* Update *aiorest* code to be compatible with *aiohttp 0.14 release*.
+
 0.3.1 (2014-12-22)
 ^^^^^^^^^^^^^^^^^^
 
