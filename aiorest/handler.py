@@ -77,7 +77,7 @@ class RESTRequestHandler(aiohttp.server.ServerHttpProtocol):
             else:
                 resp_impl.add_header('Content-Length', str(len(bbody)))
 
-            headers = request.response.headers.items(getall=True)
+            headers = request.response.headers.items()
             for key, val in headers:
                 resp_impl.add_header(key, val)
 

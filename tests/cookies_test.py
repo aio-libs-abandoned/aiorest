@@ -5,7 +5,7 @@ import asyncio
 from unittest import mock
 
 from aiorest import Request, Response
-from aiohttp.multidict import MutableMultiDict, CaseInsensitiveMultiDict
+from aiohttp import MultiDict, CIMultiDict
 
 
 class CookiesTests(unittest.TestCase):
@@ -13,11 +13,11 @@ class CookiesTests(unittest.TestCase):
     def setUp(self):
         self.loop = mock.Mock()
         self._REQUEST = aiohttp.RawRequestMessage(
-            'GET', '/some/path', '1.1', MutableMultiDict(), True, None)
+            'GET', '/some/path', '1.1', MultiDict(), True, None)
 
     def test_no_request_cookies(self):
         req = Request('host', aiohttp.RawRequestMessage(
-            'GET', '/some/path', '1.1', CaseInsensitiveMultiDict(),
+            'GET', '/some/path', '1.1', CIMultiDict(),
             True, None),
             None, loop=self.loop)
 

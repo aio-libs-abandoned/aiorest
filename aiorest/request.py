@@ -4,7 +4,7 @@ import http.cookies
 
 from urllib.parse import urlsplit, parse_qsl
 
-from aiohttp.multidict import MultiDict, MutableMultiDict
+from aiohttp.multidict import MultiDict, CIMultiDict, MultiDictProxy
 
 from .errors import JsonLoadError, JsonDecodeError
 
@@ -18,7 +18,7 @@ __all__ = [
 class Response:
 
     def __init__(self):
-        self.headers = MutableMultiDict()
+        self.headers = CIMultiDict()
         self._status_code = 200
         self._cookies = http.cookies.SimpleCookie()
         self._deleted_cookies = set()
@@ -99,7 +99,7 @@ class Request:
         self.path_url = self.host_url + self.path
         self.url = self.host_url + self.path_qs
         self.query_string = res.query
-        self.args = MultiDict(parse_qsl(res.query))
+        self.args = MultiDictProxy(MultiDict(parse_qsl(res.query)))
         self.headers = message.headers
         self.matchdict = {}
         self._request_body = req_body
@@ -159,8 +159,9 @@ class Request:
         if self._cookies is None:
             raw = self.headers.get('COOKIE', '')
             parsed = http.cookies.SimpleCookie(raw)
-            self._cookies = MultiDict({key: val.value
-                                       for key, val in parsed.items()})
+            self._cookies = MultiDictProxy(MultiDict({key: val.value
+                                                      for key, val in
+                                                      parsed.items()}))
         return self._cookies
 
     def add_response_callback(self, callback, *args, **kwargs):
