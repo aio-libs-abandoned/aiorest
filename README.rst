@@ -7,6 +7,31 @@ JSON REST framework based on aiohttp (an asyncio (PEP 3156) http server).
    :target: https://travis-ci.org/aio-libs/aiorest
 
 
+aiorest development has stopped
+-------------------------------
+
+The project always was in experimental status: we have tried to make the proof
+of concept for ``aiohttp`` high level server.
+
+Now the work is done, the most important parts transplanted to
+``aiohttp.web``: ``Request`` and ``Response``.
+
+Some ``aiorest`` features are not supported by ``aiohttp.web`` yet:
+sessions, CORS and security.
+
+We are working hard on the issue by making ``aiohttp`` extension
+libraries for those ones.
+
+We will keep *aiorest* work on top of *aiohttp* new versions for a
+while.
+
+Please report about incompatibility bugs to *aiorest github
+issue tracker* -- we'll fix those.
+
+
+
+
+
 Example usage
 -------------
 
