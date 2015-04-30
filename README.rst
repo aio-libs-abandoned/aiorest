@@ -1,14 +1,14 @@
 aiorest
 =======
 
+The development has stopped, the project is abandoned.
+==========================================================
+
 JSON REST framework based on aiohttp (an asyncio (PEP 3156) http server).
 
 .. image:: https://travis-ci.org/aio-libs/aiorest.svg?branch=master
    :target: https://travis-ci.org/aio-libs/aiorest
 
-
-aiorest development has stopped
--------------------------------
 
 The project always was in experimental status: we have tried to make the proof
 of concept for ``aiohttp`` high level server.
